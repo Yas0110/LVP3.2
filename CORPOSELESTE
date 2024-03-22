@@ -1,0 +1,88 @@
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <cmath>
+
+using namespace std;
+//Crie uma struct chamada CorpoCeleste. A estrutura deve conter um atributo nome do tipo string e os atributos raioPlaneta e massa do tipo double.
+struct CorpoCeleste{
+
+    string nome;
+    double raioPlaneta;
+    double massa;
+
+};
+//Crie uma classe chamada Sistema_Interestelar que deverá conter dois atributos do tipo CorpoCeleste, um atributo para armazenar a distância entre os dois Corpos Celestes do tipo double, um atributo para armazenar o nome e um atributo constante do tipo const double para armazenar a constante gravitacional universal (6.67e-11 = 6.67*10-11).
+class Sistema_Interestelar{
+
+private:
+
+    CorpoCeleste corpo_1;
+    CorpoCeleste corpo_2;
+    double distancia;
+    const double constante_gravitacional = 6.67e-11;
+
+public:
+    void DadosPlanetas(){
+        cout << "Preencha os dados par os dois corpos celetes..." << endl;
+        cout << "Corpo 1" << endl;
+        cout << "Nome:" << endl;
+        cin >> corpo_1.nome;
+        cout << "Massa:" << endl;
+        cin >> corpo_1.massa;
+        cout << "Raio:" << endl;
+        cin >> corpo_1.raioPlaneta;
+
+        cout << "Preencha os dados par os dois corpos celetes..." << endl;
+        cout << "Corpo 2" << endl;
+        cout << "Nome:" << endl;
+        cin >> corpo_2.nome;
+        cout << "Massa:" << endl;
+        cin >> corpo_2.massa;
+        cout << "Raio:" << endl;
+        cin >> corpo_2.raioPlaneta;
+    }
+
+    void DistanciaCorpo()
+
+        cout << "Distância entre os corpos:" << endl;
+        cin >> distancia;
+
+    double CalculoForca(){
+
+        return (constante_gravitacional * corpo_1.massa * corpo_2.massa)/(distancia * distancia);
+
+    }
+    double CalculoVelocidadeEscape(){
+        double massa_maior = max(corpo_1.massa, corpo_2.massa);
+        return sqrt((2* constante_gravitacional * massa_maior)/distancia);
+    }
+    double CalculoVelocidadeOrbita(){
+        double massa_menor = min(corpo_1.massa, corpo_2.massa);
+        double massa_maior = max(corpo_1.massa, corpo_2.massa);
+        return sqrt((constante_gravitacional * massa_maior)/distancia);
+    }
+    double CalculoCampo(){
+        double raio_maior = max(corpo_1.raioPlaneta, corpo_2.raioPlaneta);
+        return constante_gravitacional * (corpo_1.massa/raio_maior);
+    }
+};
+int main(){
+    sistema_Interestelar sistema;
+
+    sistema.DadosPlanetas();
+    sistema.DistanciaCorpo();
+
+    double f_gravitacional = sistema.CalculoForca();
+    double v_escape = sistema.CalculoVelocidadeEscape();
+    double v_orbtal = sistema.CalculoVelocidadeOrbita();
+    double c_gravitacional = sistema.CalculoCampo();
+
+    cout << "A força gravitacional é: " << scientific << setprecision(2) << f_gravitacional << "N" << endl;
+    cout << "O campo gravitacional do maior corpo celeste é: " << scientific << setprecision(2) << c_gravitacional << " m/s²" << endl;
+    cout << "A velocidade de escape do maior corpo é: " << scientific << setprecision(2) << v_escape / 1000.0 << " km/s" << endl;
+    cout << "A velocidade em órbita do menor corpo em relação ao maior é: " << scientific << setprecision(2) << v_orbtal / 1000.0 << " km/s" << endl;
+    return 0;
+
+
+}
